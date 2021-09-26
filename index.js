@@ -20,20 +20,12 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 app.post("/queja/insertar", (req, res)=>{
 
-    //Armo la fecha de la queja
-    const fechita = new Date();
-    const anio = fechita.getFullYear();
-    const mes = fechita.getMonth();
-    const dia = fechita.getDay();
-
     //Parametros para insertar la queja
     const descripcionQueja = req.body.descripcionQueja;
-    const fechaQueja = `${anio}-${mes}-${dia}`;
-    const sucursal = 13;
+    const sucursal = req.body.idSucursal;
 
-
-    const insertar = "INSERT INTO Queja (quejaDescripcion, quejaFecha, idSucursal) VALUES (?, ?, ?);"
-    db.query(insertar, [descripcionQueja, fechaQueja, sucursal],(err, resultado) => {
+    const insertar = "INSERT INTO Queja (quejaDescripcion, idSucursal) VALUES (?, ?);"
+    db.query(insertar, [descripcionQueja, sucursal],(err, resultado) => {
         console.log(err);
     })
 })
