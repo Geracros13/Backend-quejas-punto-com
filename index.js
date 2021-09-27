@@ -16,6 +16,9 @@ app.use(cors())
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
+//Puerto
+app.set('port', process.env.PORT || 5000);
+
 
 
 app.post("/queja/insertar", (req, res)=>{
@@ -28,9 +31,18 @@ app.post("/queja/insertar", (req, res)=>{
     db.query(insertar, [descripcionQueja, sucursal],(err, resultado) => {
         console.log(err);
     })
+
+    res.send({
+        msg: "Queja insertada",
+
+    }).status(200);
 })
 
 
-app.listen(5000, () => {
-    console.log("Aplicativo corriendo en el puerto 5000");
+// app.listen(5000, () => {
+//     console.log("Aplicativo corriendo en el puerto 5000");
+// })
+
+app.listen(app.get('port'), ()=>{
+    console.log(`Aplicativo corriendo en el puerto siguiente ---> ${app.get('port')}`);
 })
